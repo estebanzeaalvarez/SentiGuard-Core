@@ -1,0 +1,4 @@
+[2026-03-31 11:14:43] ALERTA CRÍTICA | Usuario: AngryUser | Score: -0.23 | Post: The last update is a complete disaster, I hate it.
+[2026-03-31 11:14:43] ALERTA CRÍTICA | Usuario: SadCustomer | Score: -0.94 | Post: I am very disappointed with the customer service, very bad experience.
+[2026-03-31 11:14:43] ALERTA CRÍTICA | Usuario: ToxicHater | Score: 0.00 | Post: This software is garbage and the developers should quit.
+[2026-03-31 11:17:48] ALERTA CRÍTICA | Usuario: HaterPrime | Score: 0.20 | Post: I will never buy from this brand again, absolute trash.

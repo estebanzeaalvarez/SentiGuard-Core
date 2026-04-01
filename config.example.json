@@ -1,0 +1,6 @@
+{
+    "archivo_log": "alertas_seguridad.txt",
+    "frecuencia_escaneo": 10,
+    "discord_webhook": "PON_AQUI_TU_WEBHOOK",
+    "hf_token": "PON_AQUI_TU_TOKEN_DE_HUGGINGFACE"
+}
