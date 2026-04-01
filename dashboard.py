@@ -41,15 +41,34 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
+import numpy as np # Asegúrate de tener numpy en requirements.txt
+
 def cargar_datos():
     ruta_raiz = os.path.dirname(os.path.abspath(__file__))
     ruta_db = os.path.join(ruta_raiz, "sentiguard.db")
-    if not os.path.exists(ruta_db): return pd.DataFrame()
+    
+    if not os.path.exists(ruta_db):
+        # GENERACIÓN DE DATOS DE SIMULACIÓN PARA DESPLIEGUE EN NUBE
+        chart_data = {
+            'fecha': pd.date_range(start=datetime.now().replace(minute=0, second=0), periods=20, freq='1min'),
+            'usuario': ['System_Bot', 'Intel_Node_01', 'Security_Daemon', 'Kernel_Monitor'] * 5,
+            'texto': [
+                "Tesla stock analysis indicates market volatility.",
+                "Apple security patch deployed successfully.",
+                "Meta data breach rumors investigated.",
+                "Google cloud services report 99% uptime.",
+                "Microsoft Azure latency detected in North Europe."
+            ] * 4,
+            'label': ['NEGATIVO', 'POSITIVO', 'NEUTRO', 'POSITIVO', 'NEGATIVO'] * 4,
+            'score': np.random.uniform(0.1, 0.9, 20)
+        }
+        return pd.DataFrame(chart_data)
+
     try:
         conn = sqlite3.connect(ruta_db, check_same_thread=False)
         df = pd.read_sql_query("SELECT * FROM alertas", conn)
         conn.close()
-        if df.empty: return df
+        if df.empty: return pd.DataFrame()
         df['fecha'] = pd.to_datetime(df['fecha'], errors='coerce')
         return df.dropna(subset=['fecha'])
     except:
@@ -58,17 +77,23 @@ def cargar_datos():
 # --- SIDEBAR ---
 with st.sidebar:
     st.markdown("### 🛠️ COMANDOS DE SISTEMA")
+    
+    # Detectar si estamos en local o en la nube
+    is_cloud = os.getenv("STREAMLIT_RUNTIME_ENV_CLOUD") == "true"
+    
     if st.button("🚀 INICIAR ESCANEO DE RED", type="primary"):
-        try:
-            subprocess.Popen([sys.executable, "main.py"], 
-                             creationflags=subprocess.CREATE_NEW_CONSOLE if os.name == 'nt' else 0)
-            st.success("📡 Escáner iniciado.")
-        except Exception as e:
-            st.error(f"Error: {e}")
+        if is_cloud:
+            st.info("📡 MODO DEMO: El escáner está simulando la ingesta de datos en tiempo real.")
+        else:
+            try:
+                subprocess.Popen([sys.executable, "main.py"], 
+                                 creationflags=subprocess.CREATE_NEW_CONSOLE if os.name == 'nt' else 0)
+                st.success("📡 Escáner iniciado localmente.")
+            except Exception as e:
+                st.error(f"Error: {e}")
 
     if st.button("🔄 ACTUALIZAR VISTA"):
         st.rerun()
-
 # --- INTERFAZ PRINCIPAL ---
 df = cargar_datos()
 
