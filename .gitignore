@@ -3,3 +3,7 @@ __pycache__/
 config.json
 sentiguard.db
 .vscode/
+venv/
+.venv/
+__pycache__/
+*.db
