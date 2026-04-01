@@ -5,7 +5,13 @@ SentiGuard es un ecosistema de monitorización automatizada que utiliza Intelige
 
 ---
 
-## 🚀 Arquitectura Técnica
+## 🌐 Dashboard en Vivo
+Puedes acceder a la interfaz de monitoreo en tiempo real a través del siguiente enlace:
+> **Link:** [SentiGuard Command Center](https://sentiguard-core-fmdtzpxpwkzgsspsy4dqka.streamlit.app/)
+
+---
+
+## 🏗️ Arquitectura Técnica
 El sistema está diseñado bajo una arquitectura desacoplada para garantizar escalabilidad y eficiencia:
 
 * **Ingestion Engine:** Scrapers optimizados que consumen fuentes de datos (Reddit/News APIs).
@@ -14,32 +20,24 @@ El sistema está diseñado bajo una arquitectura desacoplada para garantizar esc
 * **Alerting System:** Notificaciones instantáneas vía Webhooks de Discord.
 * **Command Center:** Dashboard interactivo desarrollado en Streamlit con visualizaciones de Plotly.
 
-## 🛠️ Tecnologías Utilizadas
+## 💻 Tecnologías Utilizadas
 * **Lenguaje:** Python 3.10+
 * **IA:** Transformers (Hugging Face), Pipeline de Análisis de Sentimiento.
 * **Visualización:** Streamlit, Plotly Express, Rich (Terminal UI).
 * **Backend:** SQLite, Pandas, Subprocess Management.
 
-## 📈 Impacto de Negocio
+## 📊 Impacto de Negocio
 Este proyecto resuelve el problema de la latencia en la comunicación de crisis. Permite a departamentos de Relaciones Públicas o CEOs reaccionar a menciones negativas antes de que se vuelvan virales, reduciendo el riesgo reputacional.
 
-## 🛠️ Despliegue y Configuración (Entorno de Desarrollo)
-
-El sistema está diseñado para ser modular y requiere una configuración de entorno controlada para garantizar la integridad del análisis de sentimientos.
+## ⚙️ Implementación y Operación (System Overview)
+El despliegue sigue estándares de grado industrial para garantizar la integridad del análisis y la seguridad de los datos.
 
 ### Configuración del Entorno
-* **Aislamiento de Dependencias:** El proyecto utiliza `virtualenv` para gestionar un árbol de dependencias específico, evitando conflictos con librerías globales.
-* **Gestión de Secretos:** Las credenciales de APIs (Reddit/News) y Webhooks se gestionan a través de un archivo `config.json` (no incluido en el repositorio por seguridad), siguiendo las mejores prácticas de **DevSecOps**.
+* **Aislamiento:** Uso de `virtualenv` para gestionar dependencias específicas y asegurar la reproducibilidad del pipeline.
+* **DevSecOps:** Las credenciales de APIs y Webhooks se gestionan mediante `config.json` (fuera del control de versiones) para proteger la integridad de las fuentes.
 
 ### Pipeline de Ejecución
-1. **Initial Boot:** Validación de integridad de la base de datos local (SQLite).
-2. **Ingestion Cycle:** Activación de scrapers multihilo para la captura de data en tiempo real.
-3. **Inference Stage:** Procesamiento de texto a través del pipeline de Hugging Face.
-4. **Broadcast:** Disparo de alertas hacia el Command Center y Discord.
-
-## 📦 Instalación y Uso
-1. Clonar el repositorio.
-2. Instalar dependencias: `pip install -r requirements.txt`
-3. Configurar `config.json` con tus credenciales.
-4. Ejecutar el monitor: `python main.py`
-5. Lanzar el dashboard: `streamlit run dashboard.py`
+1. **Initial Boot:** Validación de integridad de la base de datos local y esquemas.
+2. **Ingestion Cycle:** Activación de scrapers multihilo diseñados para optimizar el throughput de datos.
+3. **Inference Stage:** Procesamiento y clasificación de texto mediante modelos de lenguaje.
+4. **Broadcast:** Despacho de alertas y actualización del dashboard visual.
