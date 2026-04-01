@@ -23,6 +23,20 @@ El sistema está diseñado bajo una arquitectura desacoplada para garantizar esc
 ## 📈 Impacto de Negocio
 Este proyecto resuelve el problema de la latencia en la comunicación de crisis. Permite a departamentos de Relaciones Públicas o CEOs reaccionar a menciones negativas antes de que se vuelvan virales, reduciendo el riesgo reputacional.
 
+## 🛠️ Despliegue y Configuración (Entorno de Desarrollo)
+
+El sistema está diseñado para ser modular y requiere una configuración de entorno controlada para garantizar la integridad del análisis de sentimientos.
+
+### Configuración del Entorno
+* **Aislamiento de Dependencias:** El proyecto utiliza `virtualenv` para gestionar un árbol de dependencias específico, evitando conflictos con librerías globales.
+* **Gestión de Secretos:** Las credenciales de APIs (Reddit/News) y Webhooks se gestionan a través de un archivo `config.json` (no incluido en el repositorio por seguridad), siguiendo las mejores prácticas de **DevSecOps**.
+
+### Pipeline de Ejecución
+1. **Initial Boot:** Validación de integridad de la base de datos local (SQLite).
+2. **Ingestion Cycle:** Activación de scrapers multihilo para la captura de data en tiempo real.
+3. **Inference Stage:** Procesamiento de texto a través del pipeline de Hugging Face.
+4. **Broadcast:** Disparo de alertas hacia el Command Center y Discord.
+
 ## 📦 Instalación y Uso
 1. Clonar el repositorio.
 2. Instalar dependencias: `pip install -r requirements.txt`
